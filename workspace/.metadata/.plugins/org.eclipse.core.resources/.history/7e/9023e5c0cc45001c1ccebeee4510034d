@@ -1,0 +1,12 @@
+
+public class Hello {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// ctrl+shift+L 단축키 전체 목록보기
+		// ctrl+ +, - 글자 크기
+		// ctrl_D 한줄 삭제
+		System.out.println("Hello,world.");
+	}
+
+}
