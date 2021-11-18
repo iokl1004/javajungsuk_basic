@@ -6,3 +6,5 @@
 2021-11-16 (화) ch02 완료 ( https://www.youtube.com/watch?v=MOIKcdK-wT0&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=22 )
 
 2021-11-17 (수) ch03 완료 ( https://www.youtube.com/watch?v=B7ETGBNc3g4&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=31 )
+
+2021-11-18 (목) ch04 완료 ( https://www.youtube.com/watch?v=vDoiQAY1iRM&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=39 )
