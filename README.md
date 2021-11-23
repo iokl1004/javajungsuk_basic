@@ -11,3 +11,5 @@
 
 2021-11-23 (화) ch05 완료 ( https://www.youtube.com/watch?v=N0zXNFPA8G8&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=50 )
 현우형 결혼식 참석 및 친구 만나는 약속으로 인하여 화요일날 완료,,,
+
+2021-11-23 (화) ch06-8 완료 ( https://www.youtube.com/watch?v=GSVbcmVw1i0&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=55 )
