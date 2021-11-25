@@ -13,3 +13,7 @@
 현우형 결혼식 참석 및 친구 만나는 약속으로 인하여 화요일날 완료,,,
 
 2021-11-23 (화) ch06-8 완료 ( https://www.youtube.com/watch?v=GSVbcmVw1i0&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=55 )
+
+2021-11-24 (수) ch06-24 완료 ( https://www.youtube.com/watch?v=c9rXj3b9rKI&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=65 )
+
+2021-11-25 (목) ch07-11 완료 ( https://www.youtube.com/watch?v=XT9KmsEk9f8&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=74 )
