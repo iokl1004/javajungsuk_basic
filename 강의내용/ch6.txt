@@ -361,4 +361,357 @@ ch6-23 기본형 매개변수
 -----------------------------------------------------------------------------
 ch6-24 참조형 매개변수
 기본형 매개변수 - 변수의 값을 읽기만 할 수 있다.(read only)
-참조형 매개변수 - 변수의 값을 읽고 변경할 수 잇다.(read & write)
+참조형 매개변수 - 변수의 값을 읽고 변경할 수 있다.(read & write)
+-----------------------------------------------------------------------------
+ch6-25 참조형 매개변수 (예제)
+-----------------------------------------------------------------------------
+ch6-26 static 메서드와 인스턴스 메서드
+- 인스턴스 메서드
+ 인스턴스 생성 후, '참조변수.메서드이름()'으로 호출
+ 인스턴스 멤버(iv, im)와 관련된 작업을 하는 메서드
+ 메서드 내에서 인스턴스 변수(iv) 사용가능
+
+- static 메서드(클래스메서드) ( 예: Math.random() 같은것들 )
+ 객체생성없이 '클래스이름.메서드이름()' 으로 호출
+ 인스턴스 멤버(iv, im)와 관련없는 작업을 하는 메서드
+ 메서드 내에서 인스턴스 변수(iv) 사용불가
+
+한마디로 iv사용하면 인스턴스 매서드, iv를 사용하지 않으면 static 매서드
+-----------------------------------------------------------------------------
+ch6-27 static 메서드와 인스턴스 메서드
+class MyMath2 {
+	long a, b; // iv 인스턴스 변수
+
+	long add() { //인스턴스 메서드, 매개변수 사용안함, iv사용
+		return a + b; // 지역변수가 없으므로, iv이다.
+	}
+
+	static long add(long a, long b) {	//클래스 메서드 (statis 메서드), a와b 는 lv 지역변수
+		return a + b;	여기서 또한 a와b는 lv(지역변수) 이다.
+	}
+}
+
+class MtMathTest2 {
+	public static void main(String args[]) {
+		System.out.println(MyMath2.add(200L, 100L));	//클래스 메서드 호출
+		MyMath2 mm = new MyMath2();	//인스턴스 생성 (iv 생성)
+		mm.a = 200L;
+		mm.b = 100L;
+		System.out.println(mm.add());	//인스턴스메서드 호출, mm은 참조변수
+				// 참조변수.매서드이름();
+	}
+}
+
+언제 static 메서드를 만드냐? iv를 사용하지 않을때
+객체란? iv묶음 (인스턴스 벨류 묶음)
+iv란? 변수 묶음
+-----------------------------------------------------------------------------
+ch6-28 static을 언제 붙여야 할까?
+- 속성(멤버 변수) 중에서 공통 속성에 static을 붙인다.
+class Card {
+	String kind; //무늬
+	int number; //숫자
+
+	static int width = 100;	//폭
+	static int height = 250;	//높이
+}
+
+- 인스턴스 멤버(iv, im)을 사용하지 않는 메서드에 static을 붙인다.
+class MyMath2 {
+	long a, b;
+
+		long add()		{ return a + b }; // a, b는 인스턴스 변수
+	static long add(long a, long b)	{ return a+ b }; //a, b는 지역변수
+}
+-----------------------------------------------------------------------------
+ch6-29 메서드 간의 호출과 참조
+- static 메서드는 인스턴스 변수(iv)를 사용할 수 없다.
+class TestClass2 {
+	int iv;	//인스턴스 변수
+	static int cv;	//클래스 변수
+
+	void instanceMethod() {	//인스턴스 메서드 (객체 생성 후 호출 가능)
+		System.out.println(iv);	//인스턴스 변수를 사용할 수 잇다.
+		System.out.println(cv);	//클래스 변수를 사용할 수 있다.
+	}
+
+	static void staticMethod() {	//static 메서드 (객체 생성 없이 호출 가능)
+		System.out.println(iv);	//에러!!! 인스턴스 변수를 사용할 수 없다.
+		System.out.println(cv);	//클래스 변수는 사용할 수 있다.
+	}
+}	// end of class
+
+- static 메서드는 인스턴스 메서드(im)를 호출할 수 없다.
+class TestClass {
+	void instanceMethod() {}	// 인스턴스메서드
+	static void staticMethod() {}	// static 메서드
+
+	void instanceMethod2() {	// 인스턴스메서드
+		instanceMethod();	// 다른 인스턴스 메서드를 호출한다.
+		staticMethod();	// static 메서드를 호출한다.
+	}
+
+	static void staticMethod2() {	//static메서드
+		instanceMethod();	//에러!!! 인스턴스 메서드를 호출할 수 없다.
+		staticMethod();	// static메서드는 호출 할 수 있다.
+	}
+}	//end of class
+
+Q. static 메서드는 static 메서드 호출 가능?
+A. Yes
+
+Q. static 메서드는 인스턴스 변수(iv) 사용가능?
+A. No
+인스턴스 변수는 객체를 생성해야 사용이 가능
+객체라는 자체가 iv묶음이기 때문에 iv를 사용하려면 객체를 생성해야 사용가능한데, static 메서드는 언제나 호출이 가능 하기때문에 인스턴스 변수를 사용할수 없음.
+
+Q. static 메서드는 인스턴스 메서드 호출가능?
+A. 아니요.
+인스턴스 메서드라는건 iv로 작업을 하는건데 iv를 필요로 하기때문에 안된다
+
+Q. 왜? static 메서드는 인스턴스 멤버를 쓸 수 없나요?
+A. static 메서드 호출 시 객체(iv묶음)가 없을 수도 있어서 (static 메서드는 항상 호출 가능)
+-----------------------------------------------------------------------------
+ch6-30 오버로딩(overloading)
+한 클래스 안에 같은 이름의 메서드 여러개 정의하는 것.
+매서드 : 매서드이름 = 1:1
+
+오버로딩이 성립하기 위한 조건
+1. 메서드 이름이 같아야 한다.
+2. 매개변수의 개수 또는 타입이 달라야 한다.
+3. 반환 타입은 영향없다.
+
+메서드 이름만 같기 때문에 오버로딩이 아님
+int add(int a, int b) { return a+b; }
+int add(int x, int y) { return x+y; }
+
+반환 타입에 영향이 있으므로, 오버로딩이 아님.
+int add(int a, int b) { return a+b; }
+long add(int a, int b) { return (long)(a+b); }
+
+메서드 이름이 같고, 매개변수의 타입이 다르고, 반환타입에는 영향이 없으므로, 오버로딩이다.
+long add(int a, long b) { return a+b; }
+long add(long a, int b) { return a+b; }
+-----------------------------------------------------------------------------
+ch6-31 오버로딩(overloading) (예제)
+오버로딩의 올바른 예 - 매개변수는 다르지만 같은 의미의 기능수행
+class MyMath3 {
+	int add(int a, int b) {
+		System.out.print("int add(int a, int b) - ");
+		return a+b;
+	}
+
+	long add(long a, long b) {
+		System.out.print("long add(long a, long b) - ");
+		return a+b;
+	}
+
+	int add(int[] a) {	// 배열의 모든 요소의 합을 결과로 돌려준다.
+		System.out.print("int add(int[] a) - ");
+		int result = 0; 
+		for(int i=0; i < a.length; i++)
+			result += a[i];
+
+		return result;
+	}
+}
+-----------------------------------------------------------------------------
+6-32 생성자(constructor)
+ 인스턴스가 생성될 때마다 호출되는 '인스턴스 초기화 메서드' (인스턴스 = 객체(iv묶음))
+ 인스턴스 생성시 수행할 작업(iv 초기화)에 사용
+
+iv초기화
+Time.t = new Time():
+t.hour = 12;
+t.minute = 34;
+t.second = 56;
+
+Time t = new Time(12,34,56); //생성자 호출
+
+ 이름이 클래스 이름과 같아야 한다.
+ 리턴값이 없다. (void 안붙임)
+ 모든 클래스는 반드시 생성자를 가져야 한다.
+Card c = new Card(); // Card()는 생성자 호출
+클래스이름(타입 변수명, 타입 변수명, ... ) { //클래스 이름이 생성자 이름
+	//인스턴스 생성 시 수행될 코드,
+	// 주로 인스턴스 변수의 초기화 코드를 적는다.
+}
+
+class Card { 
+	...
+	Card() {	// 매개변수 없는 생성자.
+		//인스턴스 초기화 작업
+	}
+
+	Card(String kind, int number) {	//매개변수 있는 생성자
+		// 인스턴스 초기화 작업
+	}
+}
+-----------------------------------------------------------------------------
+ch6-33 기본 생성자(default constructor)
+ - 매개변수가 없는 생성자
+ - 생성자가 하나도 없을 때만, 컴파일러가 자동 추가
+
+ 클래스이름() {}	//기본 생성자
+ Point() {}		// Point클래스의 기본 생성자
+
+class Data_1 { //생성자 0개
+	int value;
+//	Data_1() {} // 컴파일러가 생성자를 자동으로 추가함
+}
+
+class Data_2 { //생성자 1개
+	int value;
+
+	Data_2(int x) {	//매개변수가 있는 생성자
+		value = x;
+	}
+}
+
+class Ex6_11 {
+	public static void main(String[] args) {
+		Data_1 d1 = new Data_1();
+		Data_2 d2 = new Data_2();	//compile error 발생
+	}
+}
+-----------------------------------------------------------------------------
+ch6-34 매개변수가 있는 생성자
+class Car {
+	String color;	//색상
+	String gearType;	//변속기 종류 - auto(자동), manual(수동)
+	int door;		//문의 개수
+
+	Car() {}	// 기본 생성자
+	Car(String c, String g, int d) {	// 매개변수가 있는 생성자
+		color = c;
+		gearType = g;
+		door = d;
+	}
+}
+
+Car c = new Car("white", "auto", 4);
+-----------------------------------------------------------------------------
+ch6-34 매개변수가 있는 생성자 (예제)
+-----------------------------------------------------------------------------
+ch6-36 생성자 this()
+ - 생성자에서 다른 생성자 호출할 때 사용
+
+class Car2 {
+	String color;	//색상
+	String gearType;	//변속기 종류 - auto(자동), manual(수동)
+	int door;		//문의 개수
+
+	Car2() {	// 1번 생성자
+		this("white", "auto", 4);
+	}
+
+	Car2(String color) { // 2번 생성자
+		this(color, "auto", 4);
+	}
+
+	Car2(String color, String gearType, int door) { // 3번 생성자
+		this.color = color;
+		this.gearType = gearType;
+		this.door = door;
+	}
+}
+-----------------------------------------------------------------------------
+ch6-37 참조변수 this ( ※ this() 생성자 이고, this는 참조변수 절대 헷갈리지 말것)
+- 인스턴스 자신을 가리키는 참조변수
+- 인스턴스 메서드(생성자 포함) 에서 사용가능
+- 지역변수(lv)와 인스턴스 변수(iv)를 구별할 때 사용
+- 예) 한 반에 철수라는 얘가 2명이면 앞에 성까지 붙여서 부름. 김철수, 박철수, 안철수
+Car(String c, String g, int d) {
+	//color는 iv, c는 lv
+	color = c;
+	gearType = g;
+	door = d;
+}
+
+Car(String color, String gearType, int door) {
+	//this.colors는 iv, color는 lv
+	this.color = color;
+	this.gearType = gearType;
+	this.door = door;
+}
+
+this : 인스턴스 자신을 가리키는 참조변수, 인스턴스의 주소가 저장되어 있다.
+모든 인스턴스메서드에 지역변수로 숨겨진 채로 존재한다.
+
+this(), this(매개변수) : 생성자, 같은 클래스의 다른 생성자를 호출할 때 사용한다.
+※ this와 this()는 비슷하게 생겻을 뿐 완전히 다른 것이다. this는 '참조 변수' 이고, this()는 '생성자' 이다.
+
+class MyMath2 {
+	long a, b;	// this.a, this.b (iv의 진짜 이름)
+
+	MyMath2(int a, int b) {	//생성자
+		this.a = a;
+		this.b = b;
+	}
+	long add() {	//인스턴스 메서드
+		return a + b;	//return this.a + this.b;
+	}
+	static long add(long a, long b) {	//클래스 메서드 (static 메서드)
+		return a + b;
+	}
+}
+
+생성자, 인스턴스 메서드에서는 this를 붙일수 있지만, 클래스 메서드에서는 this를 붙히지 못한다.
+-----------------------------------------------------------------------------
+ch6-38 변수의 초기화
+- 지역변수(lv)는 수동 초기화 해야함(사용전 꼭!!!)
+- 멤버변수(iv, cv)는 자동 초기화 된다.
+
+class InitTest {
+	int x;	// 인스턴스 변수
+	int y = x;	// 인스턴스 변수
+
+	void method1() {
+		int i;	// 지역변수
+		int j = i;	// 에러 지역변수를 초기화하지 않고 사용
+	}
+}
+-----------------------------------------------------------------------------
+ch6-39 멤버변수의 초기화
+1. 명시적 초기화(=) ( 대입연산자를 이용한 간단 초기화 )
+class Car {
+	int door = 4;	// 기본형(primitive type) 변수의 초기화
+	Engine e = new Engine();	//참조형(reference type) 변수의 초기화
+	Engine e // 엔진 자리만있고 엔진이 비어있다는것!
+
+2. 초기화 블럭 ( 복잡 초기화 )
+iv - 인스턴스 초기화 블럭 : {}
+cv - 클래스 초기화 블럭 : static {}
+
+3. 생성자 (iv초기화) 
+Car(String color, String gearType, int door) {	//매개변수 있는 생성자
+	this.color = color;
+	this.gearType = gearType;
+	this.door = door;
+}
+
+class StaticBlockTest {
+	static int[] arr = new int[10];	//명시적 초기화
+
+	// CV 복잡 초기화
+	static {	// 클래스 초기화 블럭 - 배열 arr을 난수로 채운다.
+		for(int i=0;i<arr.length;i++) {
+			arr[i] = (int)(Math.random()*10)+1;
+		}
+	}
+}
+
+- 클래스 변수(cv) 초기화 시점 : 클래스가 처음(메모리에 올라갈때) 로딩될 때 단 한번
+- 인스턴스 변수(iv) 초기화 시점 : 인스턴스가 생성될 때 마다
+
+class  InitTest {
+	static int cv = 1;	// 명시적 초기화
+	int iv = 1;		// 명시적 초기화
+
+	static {	cv = 2; }	// 클래스 초기화 블럭
+	{	iv = 2; }	// 인스턴스 초기화 블럭
+
+	InitTest() { //생성자
+		iv = 3;
+	}
+}
