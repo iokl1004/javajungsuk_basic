@@ -21,3 +21,5 @@
 2021-11-26 (금) 개인 약속으로 인하여 미실시...
 
 2021-11-29 (월) ch07-28 완료 ( https://www.youtube.com/watch?v=U-VGYYH-obM&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=84 )
+
+2021-11-30 (화) ch07-44 완료 ( https://www.youtube.com/watch?v=P1rDdH465Is&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=95)
