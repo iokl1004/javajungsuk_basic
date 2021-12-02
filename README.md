@@ -25,3 +25,5 @@
 2021-11-30 (화) ch07-44 완료 ( https://www.youtube.com/watch?v=P1rDdH465Is&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=95)
 
 2021-12-01 (수) ch07-52, 08-18 완료 ( https://www.youtube.com/watch?v=XmufHjSDwjA&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=103)
+
+2021-12-02 (목) ch09 완료 ( https://www.youtube.com/watch?v=_LlcuVFC6ao&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=113)
