@@ -1,6 +1,6 @@
 import java.util.Calendar;
 
-public class EX10_1 {
+public class Ex10_1 {
 
 	public static void main(String[] args) {
 		Calendar today = Calendar.getInstance();	//Calendar °´Ã¼¸¦ »ý¼º
