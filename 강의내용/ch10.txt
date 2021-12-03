@@ -1,0 +1,43 @@
+ch10-1 날짜와 시간
+- java.util.Date
+ 날짜와 시간을 다룰 목적으로 만들어진 클래스(JDK1.0)
+ Date의 메서드는 거의 deprecated(앞으로 사용하지말라는 뜻) 되었지만, 여전히 쓰이고 있다.
+
+- java.util.Calendar
+ Date 클래스를 개선한 새로운 클래스(JDK1.1). 여전히 단점이 존재
+
+- java.time패키지
+ Date와 Calendar의 단점을 개선한 새로운 클래스들을 제공(JDK1.8)
+-----------------------------------------------------------------------------
+ch10-2 Calendar클래스
+- 추상 클래스 이므로 getInstance()를 통해 구현된 객체를 얻어야 한다.
+	Calendar cal = new Calendar();	//에러!!! 추상 클래스는 인스턴스를 생헐할 수 없다.
+
+	// OK, getInstance()메서드는 Calendar클래스를 구현한 클래스의 인스턴스를 반환한다.
+	Calendar cal = Calendar.getInstance();
+-----------------------------------------------------------------------------
+ch10-3 Calendar클래스 - 예제1
+- get()으로 날짜와 시간 필드 가져오기 - int get(int field)
+	Calendar cal = Calendar.getInstance();	//현재 날짜와 시간으로 셋팅됨
+	int thisYear = cal.get(Calendar.YEAR);	//올해가 몇년인지 알아낸다.
+	int lastDayOfMonth = cal.getActualMaximum(Calendar.DATE);	//이 달의 마지막 날
+
+- Calendar에 정의된 필드
+필드명			설명
+YEAR			년
+MONTH			월(0부터 시작)
+WEEK_OF_YEAR		1월1일 ~ 지금
+WEEK_OF_MONTH		그 달의 몇 번째 주
+DATE			일
+DAY_OF_MONTH		그 달의 몇 번째일
+DAY_OF_YEAR		그 해의 몇 번째일
+DAY_OF_WEEK		요일 (1~7) 1 : 일요일
+DAY_OF_WEEK_IN_MONTH	그 달의 몇 번째 요일
+
+HOUR			시간(0~11)
+HOUR_OF_DAY		시간(0~23)
+MINUTE			분
+SECOND			초
+MILLISECOND		천분의 일초
+ZONE_OFFSET		GMT기준 시차(천분의 일초 단위)
+AM_PM			오전/오후
