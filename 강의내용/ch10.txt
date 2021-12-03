@@ -98,3 +98,60 @@ ch10-6,7 Calendar클래스 - 예제4, 5
 	//add()와 달리 roll()은 다른 필드에 영향을 미치지 않는다.
 	date.roll(Calendar.DATE, 1);	// 날짜(DATE)에 1을 더한다.
 	date.roll(Calendar.MONTH, -8);	// 월(MONTH)에서 8을 뺀다.
+-----------------------------------------------------------------------------
+ch10-8 Date와 Calendar간의 변환
+- Date의 메서드는 대부분 deprecated(사용하지 않을것을 권장) 되었지만 여전히 사용
+
+1. Calendar를 Date로 변환
+	Calendar cal = Calendar.getInstance();
+		...
+	Date d = new Date(cal.getTimeInMillis());	//Date (long date)
+2. Date를 Calendar로 변환
+	Date d = new Date();
+		...
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(d)
+-----------------------------------------------------------------------------
+ch10-9 형식화 클래스
+- java.text패키지의 DecimalFormat, SimpleDateFormat
+※ Decimal : 10진수 숫자
+※ Date : 날짜 형식화
+
+- 숫자와 날짜를 원하는 형식으로 쉽게 출력 가능(숫자, 날짜 -> 형식 문자열)
+	double number = 1234567.89;
+	DecimalFormat df = new DecimalFormat("#.#E0");
+	String result = df.format(number);	//result = "1.2E6"
+
+- 형식 문자열에서 숫자와 날짜를 뽑아내는 기능(형식 문자열 -> 숫자, 날짜)
+	DecimalFormat df = DecimalFormat("#,###.##");
+	Number num = df.parse("1,234,567,89");
+	double d = num.doubleValue();	//1234567.89
+-----------------------------------------------------------------------------
+ch10-10 DecimalForamt
+- 숫자를 형식화 할 때 사용(숫자 -> 형식 문자열)
+	double number = 1234567.89;
+	DecimalFormat df = new DecimalFormat("#.#E0");
+	String result = df.format(number);	//result = "1.2E6"
+
+- 특정 형식의 문자열을 숫자로 변환할 때도 사용(형식 문자열 -> 숫자)
+	DecimalFormat df = new DecimalFormat("#,###.##");
+	Number num = df.parse("1,234,567,89");
+	double d = num.doubleValue();	//1234567.89
+[참고] Integer.parseInt()는 콤마(,)가 포함된 문자열을 숫자로 변환 못함
+-----------------------------------------------------------------------------
+ch10-11~12 DecimalForamt (예제)
+-----------------------------------------------------------------------------
+ch10-13 SimpleDateFormat(1/2)
+- 날짜와 시간을 다양한 형식으로 출력할 수 있게 해준다.
+	Date today = new Date();
+	SimpleDateFormat df = new simpleDateFormat("yyyy-MM-dd");
+
+	//오늘 날짜를 yyyy-MM-dd형태로 변환하여 반환한다.
+	String result = df.format(today);
+-----------------------------------------------------------------------------
+ch10-13 SimpleDateFormat(2/2)	
+- 특정 형식으로 되어 있는 문자열에서 날짜와 시간을 뽑아낼 수도 있다.
+	DateFormat df = new SimpleDateFormat("yyyy년 MM월 dd일");
+	DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
+	Date d = df.parse("2015년 11월 23일");	//문자열을 Date로 변환
+	String result = df2.format(d);
