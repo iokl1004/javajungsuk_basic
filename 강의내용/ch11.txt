@@ -220,3 +220,289 @@ ch11-24 Map과 Itertaor
 	Map map = new HashMap();
 		...
 	Iterrator it = map.entrySet().iterator();
+-----------------------------------------------------------------------------
+ch11-25 Arrays(1/4) - 배열을 다루기 편리한 메서드(static)제공
+1. 배열의 출력 - toString()
+2. 배열의 복사 - copyOf(), copyOfRange()
+int[] arr = {0,1,2,3,4}
+int[] arr2 = Arrays.copyOf(arr, arr.length);	//arr2 = [0,1,2,3,4]
+int[] arr3 = Arrays.copyOf(arr, 3);		//arr3 = [0,1,2]
+int[] arr4 = Arrays.copyOf(arr, 7);		//arr4 = [0,1,2,3,4,0,0]
+int[] arr5 = Arrays.copyOfRange(arr, 2, 4);	//arr5 = [2,3]	<- 4는 불포함
+int[] arr6 = Arrays.copyOfRange(arr, 0, 7);	//arr6=[0,1,2,3,4,0,0];
+-----------------------------------------------------------------------------
+ch11-26 Arrays(2/4) - 배열을 다루기 편리한 메서드(static) 제공
+3. 배열 채우기 - fill(), setAll()
+int[] arr = new int[5];
+Arrays.fill(arr,9);	// arr=[9,9,9,9,9]
+Arrays.setAll(arr, (i) -> (int)(Math.random()*5)+1);	//arr=[1,5,2,1,1]
+
+4. 배열의 정렬과 검색 - sort(), binarySearch()
+int[] arr = { 3, 2, 0, 1, 4};
+int idx = Arrays.binarySearch(arr, 2);	//idx=-5 <- 잘못된 결과
+
+Array.sort(arr);	//배열 arr을 정렬한다.
+System.out.println(Arrays.toString(arr));	// [0,1,2,3,4]
+int idx = Arrays.binarySearch(arr,2);	// idx=2 <- 올바른 결과
+-----------------------------------------------------------------------------
+ch11-27 Arrays(3/4) - 배열을 다루기 편리한 메서드(static) 제공
+5. 다차원 배열의 출력 - deepToString();
+int[] arr = {0,1,2,3,4};
+int[][] arr2D = {{11,12}, {21,22}};
+System.out.println(Arrays.toString(arr));	//	[0,1,2,3,4]
+System.out.println(Arrays.deepToString(arr2d));	//	[[11, 12], [21,22]]
+
+6. 다차원 배열의 비교 - deepEquals()
+String[][] str2D = new String[][]{{"aaa,"bbb"},{"AAA","BBB"}};
+String[][] str2D2 = new String[][]{{"aaa,"bbb"},{"AAA","BBB"}};
+
+System.out.println(Arrays.equals(str2D, str2D2));		//false
+System.out.println(Arrays.deepEqulas(str2D, str2D2));	//true
+-----------------------------------------------------------------------------
+ch11-28 Arrays(4/4) - 배열을 다루기 편리한 메서드(static) 제공
+7. 배열을 List로 변환 - asList(Object... a)
+List list = Arrays.asList(new Integer[]{1,2,3,4,5});	//list = [1, 2, 3, 4, 5]
+List list = Arrays.asList(1,2,3,4,5);		//list = [1, 2, 3, 4, 5]
+list.add(6);	//UnsupportedOperationException 예외 발생
+
+List list = new ArrayList(Arrays.asList(1,2,3,4,5));
+
+8. 람다와 스트림(14장) 관련 - parallelXXX(), spliterator(), stream()
+-----------------------------------------------------------------------------
+ch11-29 Arrays (예제)
+-----------------------------------------------------------------------------
+ch11-30 Comparator와 Comparable
+- 객체 정렬에 필요한 메서드(정렬기준 제공)를 정의한 인터페이스
+Comparable	기본 정렬기준을 구현하는데 사용.
+comparator	기본 정렬기준 외에 다른 기준으로 정렬하고자 할때 사용
+
+public interface Comparator {
+	int compare(Object o1, Object o2);	//o1, o2 두 객체를 비교
+	boolean equals(Object obj);		// equals를 오버라이딩 하라는 뜻
+}
+public interface comparable {
+	int compareTo(Object o);	//주어진 객체(o)를 자신과 비교
+}
+
+- compare()와 compareTo()는 두 객체의 비교결과를 반환하도록 작성
+같으면  o, 오른쪽이 크면 음수(-), 작으면 양수(+)
+
+public final class Integer extends Number implements Comparable {
+	...
+	public int compareTo(Integer anotherInteger) {
+		int v1 = this.value;
+		int v2 = anotherInteger.value;
+		//같으면 0, 오른쪽 값이 크면 -1, 작으면 1을 반환
+		return (v1 < v2 ? -1 : (v1==v2? 0 : 1));
+	}
+	...
+}
+-----------------------------------------------------------------------------
+ch11-31 Comparator와 Comparable (예제)
+-----------------------------------------------------------------------------
+ch11-32 Integer와 Comparable
+	public final class Integer extends Number implements Comparable {
+		...
+		public int compareTo(Object o) {
+			return compareTo((Integer)o);
+		}
+
+		public int compareTo(Integer anotherInteger) {
+			int thisVal = this.value;
+			int anotherVal = anotherInteger.value;
+
+			// 비교하는 값이 크면 -1, 같으면 0, 작으면 1을 반환한다.
+			return (thisVal<anotherVal ? -1 : (thisVal==anotherVal ? 0 : 1));
+		}
+	..
+	}
+-----------------------------------------------------------------------------
+ch11-33 없음...
+-----------------------------------------------------------------------------
+ch11-34 HashSet - 순서X, 중복X (list는 순서O, 중복O)
+HashSet
+	- Set인터페이스를 구현한 대표적인 컬렉션 클래스
+	- 순서를 유지하려면, LinkedHashSet클래스를 사용하면 된다.
+TreeSet
+	- 범위 검색과 정렬에 유리한 컬렉션 클래스 ( 범위 검색이란 예를들어 10보다 크고 20보다 작은경우 )
+	- HashSet보다 데이터 추가, 삭제에 시간이 더 걸림
+
+HashSet 주요 메서드
+<그림 11-34-1 참고>
+-----------------------------------------------------------------------------
+ch11-35~36 HashSet (예제)
+-----------------------------------------------------------------------------
+ch11-37 HashSet
+- HashSet은 객체를 저장하기 전에 기존에 같은 객체가 있는지 확인
+  같은 객체가 없으면 저장하고, 잇으면 저장하지 않는다.
+- boolean add(Object o)는 저장할 객체의 equals()와 hashCode()를 호출
+  equlas()와 hashCode()가 오버라이딩 되어 있어야 함
+
+class Person {
+	String name;	//iv
+	int age;		//iv
+
+	Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	public String toString() {
+		return name + ":" + age;
+	}
+}
+
+public boolean equals(Object obj) {
+	if(!(obj instanceof Person)) return false;
+
+	Person tmp = (Person)obj;
+
+	return name.equals(tmp.name) && age==tmp.age;
+}
+
+public int hashCode() {
+	return (name+age.hashCode();
+}
+-----------------------------------------------------------------------------
+ch11-38 HashSet (예제)
+-----------------------------------------------------------------------------
+ch-39 TreeSet - 범위 탐색, 정렬
+- 이진 탐색 트리(binary search tree)로 구현. 범위 탐색과 정렬에 유리.
+- 이진 트리는 모든 노드가 최대 2개의 하위 노드를 갖음
+   각 요소(node)가 나무(tree)형태로 연결(LinkedList의 변형)
+
+class TreeNode {
+	TreeNode left;	//왼쪽 자식노드
+	Object element;	//저장할 객체
+	TreeNode right;	//오른쪽 자식노드
+}
+-----------------------------------------------------------------------------
+ch11-40 이진 탐색 트리(binary search tree)
+- 부모보다 작은 값은 왼쪽, 큰 값은 오른쪽에 저장
+- 데이터가 많아질 수록 추가, 삭제에 시간이 더 걸림(비교 횟수 증가)
+
+class TreeNode {
+	TreeNode left;
+	Object element;
+	TreeNode right;
+}
+-----------------------------------------------------------------------------
+ch11-41 TreeSet - 데이터 저장과정 boolean add(Object o)
+※ TreeSet에 7, 4, 9, 1, 5의 순서로 데이터를 저장하면, 아래의 과정을 거친다.
+(루트부터 트리를 따라 내려가며 값을 비교, 작으면 왼쪽, 크면 오른쪽에 저장)
+-----------------------------------------------------------------------------
+ch11-42 TreeSet - 주요 생성자와 메서드
+<그림 ch11-42-1 참고>
+-----------------------------------------------------------------------------
+ch11-43~44 TreeSet (예제)
+-----------------------------------------------------------------------------
+ch11-45 TreeSet 예제3 범위 검색 subSet(), headSet(), tailSet()
+<그림 ch11-45-1 참고>
+-----------------------------------------------------------------------------
+[알아두면 좋아요] 트리 순회(tree traversal)
+- 이진 트리의 모든 노드를 한번씩 읽는 것을 트리 순회라고 한다.
+- 전위, 중위 후위 순회법이 있으며, 중위 순회하면 오름차순으로 정렬된다.
+단점 : 추가, 삭제 시간이 오래걸린다!!
+-----------------------------------------------------------------------------
+ch11-46 HashMap과 Hashtable - 순서X, 중복(키X, 값O)
+- Map 인터페이스를 구현, 데이터를 키와 값의 쌍으로 저장
+- HashMap(동기화X)은 HashTable(동기화O)의 신버젼
+
+			Map
+	Hashtable	HashMap		SortedMap
+			LinkedHashMap	TreeMap
+- HashMap
+ - Map 인터페이스를 구현한 대표적인 컬렉션 클래스
+ - 순서를 유지하려면, LinkedHashMap클래스를 사용하면 된다.
+- TreeMap
+ - 범위 검색과 정렬에 유리한 컬렉션 클래스
+ - HashMap보다 데이터 추가, 삭제에 시간이 더 걸림
+-----------------------------------------------------------------------------
+ch11-47 HashMap의 키(key)와 값(value)
+- 해싱(hashing)기법으로 데이터를 저장. 데이터가 많아도 검색이 빠르다.
+- Map인터페이스를 구현. 데이터를 키와 값의 쌍으로 저장
+	키(key)	컬렉션 내의 키(key) 중에서 유일해야 한다.
+	값(value)	키(key)와 달리 데이터의 중복을 허용한다.
+
+비객체지향적인 코드
+Object[] key;
+Object[] value;
+
+객체지향적인 코드
+Entry[] table;
+class Entry {
+	Object key;
+	Object value;
+}
+-----------------------------------------------------------------------------
+해싱(hasing) - (1/3) 환자정보관리
+해싱리난 한마디로 해쉬함수를 이용해서 데이터를 저장 & 읽어오기
+
+환자정보관리가 너무 많은데 어떻게하지....
+년도 별로 캐비넷에 환자정보를 넣어두자!!
+??? : 환자정보좀 찾아주세요. 주민번호는 72...
+간호사 : 72년생이면 캐비넷 7번 서랍에 있겠네!!!
+
+72xxxx-xxxxxxx -> 해시함수 (hash function) -> 7
+-----------------------------------------------------------------------------
+해싱(hasing) - (2/3)
+- 해시함수(hash function)로 해시테이블(hash table)에 데이터를 저장, 검색
+ 배열의 장점 : 접근성이 좋다
+ 링크드리스트의 장점 : 변경에 유리하다
+- 해시테이블은 배열과 링크드 리스트가 조합된 형태
+-----------------------------------------------------------------------------
+해싱(hasing) - (3/3)
+- 해시테이블에 저장된 데이터를 가져오는 과정
+
+① 키로 해시함수를 호출해서 해시코드를 얻는다.
+② 해시코드(해시함수의 반환값)에 대응하는 링크드리스트를 배열에서 찾는다.
+③ 링크드리스트에서 키와 일치하는 데이터를 찾는다.
+ ※ 해시함수는 같은 키에 대해 항상 같은 해시코드를 반환해야 한다.
+     서로 다른 키일지라도 같은 값의 해시코드를 반환할 수도 있다.
+-----------------------------------------------------------------------------
+ch11-48 HashMap - 주요 메서드
+<그림 ch 11-48-1 참고>
+-----------------------------------------------------------------------------
+ch11-49~51 HashMap (예제)
+-----------------------------------------------------------------------------
+ch11-52~54 Collections(1/2) - 컬렉션을 위한 메서드(static)를 제공	//static : Objects, Arrays, Collections
+1. 컬렉션 채우기, 복사, 정렬, 검색 - fill(), copy(), osrt(), binarySearch() 등
+2. 컬렉션의 동기화 - synchronizedXXX()
+	static Collection synchronizedCollection(Collection c)
+	static List synchronizedList(List l)
+	static Set synchronizedSet(Set s)
+	static Map synchronizedMap(Map m)
+	static SortedSet synchronizedSortedSet(SortedSet s)
+	static SortedMap synchronizedSortedMap(SortedMap m)
+
+사용법 
+List syncList = Collections.syncronizedList(new ArrayList(...));
+
+3. 변경불가(readOnly) 컬렉션 만들기 - unmodifiableXXX()
+	static Collection unmodifiableCollection(Collection c)
+	static List unmodifiableList(List l)
+	static Set unmodifiableSet(Set s)
+	static Map unmodifiableMap(Map m)
+	static SortedSet unmodifiableSortedSet(SortedSet s)
+	static SortedMap unmodifiableSortedMap(SortedMap m)
+-----------------------------------------------------------------------------
+ch11-52~54 Collections(2/2) - 컬렉션을 위한 메서드(static)를 제공	//static : Objects, Arrays, Collections
+4. 싱글톤 컬렉션 만들기 - singletonXXX()
+
+	static List singletonList(List l)
+	static Set singletonSet(Set s)	//singletionSet이 아님에 주의
+	static Map singletonMap(Map m)
+
+5. 한 종류의 객체만 저장하는 컬렉션 만들기 - checkedXXX();
+	static Collection checkedCollection(Collection c, Class type)
+	static List checkedList(List l, Class type)
+	static Set checkedSet(Set s, Class type)
+	static Map checkedMap(Map m, Class keyType, Class valueType)
+	static Queue checkedQueue(Queue queue, Class type)
+	static NavigableSet checkedNavigableSet(NavigableSet s, Class type)
+	static SortedSet checkedSortedMap(SortedSet s, Class type)
+-----------------------------------------------------------------------------
+ch11-55 Collections (예제)
+-----------------------------------------------------------------------------
+ch11-56 컬렉션 클래스 정리 & 요약 (1/2)
+<그림 ch 11-56-1 참고>
