@@ -32,3 +32,5 @@
 
 2021-12-06 (월) ch11-24 완료 ( https://www.youtube.com/watch?v=jKP2zX_p57c&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=125 )
 치과 방문으로 인해서 진도를 많이 못나갔음...
+
+2021-12-07 (화) ch11 완료 ( https://www.youtube.com/watch?v=u0pJGFyvrqc&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=134 )
