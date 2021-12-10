@@ -37,4 +37,6 @@
 
 2021-12-08 (수) ch12-22 완료 ( https://www.youtube.com/watch?v=R0WrMaKoLTE&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=143 )
 
-2021-12-09 (목) ch13-21 완료 ( https://www.youtube.com/watch?v=W0v3Gwx92hc&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=152 )
+2021-12-09 (목) ch12-37, 13-21 완료 ( https://www.youtube.com/watch?v=W0v3Gwx92hc&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=152 )
+
+2021-12-10 (금) ch13-36, 14-8 완료 ( https://www.youtube.com/watch?v=HPxnDM_FkGc&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=160 )
