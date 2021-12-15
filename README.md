@@ -44,3 +44,5 @@
 2021-12-13 (월) 개인적인 사정으로 인하여 못하였음...
 
 2021-12-14 (화) ch14-34 완료 ( https://www.youtube.com/watch?v=sEa4RQGG0HU&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=167 )
+
+2021-12-15 (수) ch14-50 완료 ( https://www.youtube.com/watch?v=VUh_t_j9qjE&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=171 )
