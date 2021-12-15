@@ -1,0 +1,21 @@
+import java.util.stream.Stream;
+
+public class Ex14_5 {
+
+	public static void main(String[] args) {
+		Stream<Student> studentStream = Stream.of((
+	}
+
+}
+
+class Student implements Comparable<Student> {
+	String name;
+	int ban;
+	int totalScore;
+	
+	Student(String name, int ban, int totalScore) {
+		this.name = name;
+		this.ban = ban;
+		this.totalScore = totalScore;
+	}
+}

@@ -1,17 +1,30 @@
-import java.util.Random;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 class Ex14_0 {
 	public static void main(String[] args) {
-		// iterate(T seed, UnaryOperator f)	단항 연산자
-		Stream<Integer> intStream = Stream.iterate(0,  n -> n + 2);
-		intStream.limit(10).forEach(System.out::println);
+//		int[] arr = null;
+		int[] arr = new int[0];
+		System.out.println("arr.length="+arr.length);
 		
-		// generate(Supplier s) : 추가만 하는것 입력x, 출력O
-		Stream<Integer> oneStream = Stream.generate(() -> 1);
-		oneStream
-//		.limit(10)
-		.forEach(System.out::println);
+//		Optional<String> opt = null;	//OK. 하지만 바람직하진 않다...
+		Optional<String> opt = Optional.empty();
+//		Optional<String> opt = Optional.of("abc");
+
+		System.out.println("opt="+opt);
+//		System.out.println("opt="+opt.get());
+		
+		String str = "ㅎㅎ";
+		
+//		try {
+//			str = opt.get(); //예외 발생
+//		} catch (Exception e) {
+//			str ="";	//예외가 발생하면 빈 문자열("")로 초기화
+//		}	//예외발생
+		
+//		str = opt.orElse("EMPTY");	//Optional에 저장된 값이 null이면 "" 반환!
+//		str = opt.orElseGet(()->new String());	//Optional에 저장된 값이 null이면 "" 반환!
+		str = opt.orElseGet(String::new);	//위의 람다식을 메소드 참조로 변경하면 이렇게 됨!
+		System.out.println("str="+str);
+		
 	}
 }

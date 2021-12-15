@@ -455,3 +455,262 @@ Stream<String[]> strArrStrm = Stream.of(new String[]{"abc", "def", "ghi" },
 Stream<Stream<String>> strStrStrm = strArrStrm.map(Arrays::stream);
 
 Steam<String> strStrStrm = strArrStrm.flatMap(Arrays::stream);	// Arrays.stream(T[]);
+-----------------------------------------------------------------------------
+ch14-34 스트림의 중간연산 (예제)
+-----------------------------------------------------------------------------
+ch14-35 Optional<T>
+- T 타입 객체의 래퍼 클래스 - Optional<T>
+public final class Optional<T> {
+	private final T value;	//T타입의 참조변수
+	...
+}
+
+① null을 직접 다루는것은 위험함!! (왜냐!! NullPointerException 발생 가능!)
+② null체크를 하려면 if문은 필수 그렇게 되면 코드가 상당히 지저분해짐
+
+Optional 객체를 사용하면 위의 1, 2 사항을 안해도된다!
+-----------------------------------------------------------------------------
+ch14-36 Optional<T> 객체 생성하기
+- Optional<T>객체를 생성하는 다양한 방법
+String str = "abc";
+Optional<String> optVal = Optional.of(str);
+Optional<String> optVal = Optional.of("abc");
+Optional<String> optVal = Optional.of(null);		// NullPointerException발생
+Optional<String> optVal = Optional.ofNullable(null);	// OK!
+
+- null대신 빈 Optional<T>객체를 사용하자
+Optional<String> optVal = null;	// 널로 초기화,,, 바람직하지 않음
+Optional<String> optVal = Optional.<String>empty();	// 빈 객체로 초기화
+-----------------------------------------------------------------------------
+ch14-37 Optional<T> 객체의 값 가져오기
+- Optional객체의 값 가져오기 - get(), orElse(), orElseGet(), orElseThrow()
+Optional<String> optVal = Optional.of("abc");
+String str1 = optVal.get();					//optVal에 저장된 값을 반환. null이면 예외발생
+String str1 = optVal.orElse("");				//optVal에 저장된 값이 null일 때는, ""를 반환
+String str1 = optVal.orElseGet(String::new);			//람다식 사용가능 () -> new String()
+String str1 = optVal.orElseThrow(NullPointerException::new);	//널이면 예외 발생
+
+- isPresent() - Optional객체의 값이 null이면 false, 아니면 true를 반환
+if(Optional.ofNullable(str).isPresent()) { // if(str!=nul) {
+	System.out.println(str);
+}
+-----------------------------------------------------------------------------
+ch14-38 OptionalInt, OptionalLong, OptionalDouble
+- 기본형 값을 감싸는 래퍼클래스
+public final class OptionalInt {
+	...
+	private final boolean isPresent;	//값이 저장되어 있으면 true
+	private final int value;	//int타입의 변수
+
+- OptionalInt의 값 가져오기 - int getAsInt()
+Optional 클래스	값을 반환하는 메서드
+Optional<T>	T	get()
+OptionalInt	int	getAsInt()
+OptionalLong	long	getAsLong()
+OptionalDouble	double	getAsDouble()
+
+- 빈 Optional객체와의 비교
+	OptionalInt opt = OptionalInt.of(0);	//OptionalInt에 0을 저장
+	OptionalInt op2 = OptionalInt.empty();//OptionalInt에 0을 저장
+
+	System.out.println(opt.isPresent());	//true
+	System.out.println(opt2.isPresent());	//false
+	System.out.println(opt.equals(opt2));	//false
+-----------------------------------------------------------------------------
+ch14-39 OptionalInt, OptionalLong, OptionalDouble (예제)
+-----------------------------------------------------------------------------
+ch14-40 스트림의 최종연산 - forEach()
+Stream의 연산
+중간연산 : n번 ( 스트림을 반환 )
+최종연산 : 1번 ( 스트림 요소 소모, 스트림이 닫힘 )
+
+- 스트림의 모든 요소에 지정된 작업을 수행 - forEach(), forEachOrdered()
+void forEach(Consumer<? super T? action)	// 병렬스트림인 경우 순서가 보장되지 않음
+void forEachOrdered(Consumer<? super T> action)	//병렬 스트림인 경우에도 순서가 보장됨
+
+IntStream.range(1, 10).sequential().forEach(System.out::print);		//123456789
+IntStream.range(1, 10).sequential().forEachOrdered(System.out::print);	//123456789
+
+IntStream.range(1, 10).parallel().forEach(System.out::print);			//683295714
+IntStream.range(1, 10).parallel().forEachOrdered(System.out::print);		//123456789
+-----------------------------------------------------------------------------
+ch14-41 스트림의 최종연산 - 조건 검사
+- 조건 검사 - allMathch(), anyMatch(), noneMatch()
+boolean allMatch (Predicate<? superT> predicate) // 모든 요소가 조건을 만족시키면 true
+boolean anyMatch (Predicate<? superT> predicate) // 한 요소라도 조건을 만족시키면 true
+boolean noneMatch (Predicate<? superT> predicate) // 모든 요소가 조건을 만족시키지 않으면 true
+
+boolean hasFiledStu = stuStream.anyMatch(s->s.getTotalScore()<=100);	//낙제자가 있는지?
+
+- 조건에 일치하는 요소 찾기 - findFirst(), findAny()
+Optional<T> findFirst()	// 첫 번째 요소를 반환. 순차 스트림에 사용
+Optional<T> findAny()	// 아무거나 하나를 반환. 병렬 스트림에 사용
+
+Optional<Student> result = stuStream.filter(s-> s.getTotalScore() <= 100).findFirst();
+Optional<Student> result = parallelStream(s-> s.getTotalScore() <= 100).findAny();
+-----------------------------------------------------------------------------
+ch14-42,43 스트림의 최종연산 - reduce()
+- 스트림의 요소를 하나씩 줄여가며 누적연산 수행 - reduce()
+Optional<T> reduce(BinaryOperator<T> accumlator)
+T	     reduce(T identity, BinaryOperator<T> accumulator)
+U	     reduce(U identity, BiFunction<U, T, U> accumulator, BinaryOperator<U> combiner)
+
+identity - 초기값
+accumulator - 이전 연산결과와 스트림의 요소에 수행할 연산
+combiner - 병렬처리된 결과를 합치는데 사용할 연산(병렬 스트림) ( 딱히 중요하지 않으시다고함 )
+
+//int reduce(int identity, IntBinaryOperator op)
+int count = intStream.reduce( 0, (a,b) -> a + 1);			   //count()
+int sum = intStream.reduce(0, (a,b) -> a + b);			   //sum()
+int max = intStream.reduce(Integer.MIN_VALUE, (a,b)-> a > b ? a : b); //max()
+int max = intStream.reduce(Integer.MAX_VALUE, (a,b)-> a > b ? a : b); //min()
+-----------------------------------------------------------------------------
+ch14-44 스트림의 최종연산 (예제)
+-----------------------------------------------------------------------------
+ch14-45 collect()와 Collectors
+- collect()는 Collector를 매개변수로 하는 스트림의 최종연산
+Object collect(Collector collector) // Collector를 구현한 클래스의 객체를 매개변수로
+Object collect(Supplier supplier, Biconsumer accumlator, Biconsumer combiner) // 잘 안쓰임
+
+- Collector는 수집(collect)에 필요한 메서드를 정의해 놓은 인터페이스
+public interface Collector<T, A, R> {	// T(요소)를 A에 누적한 다음, 결과를 R로 변환해서 반환
+	Supplier<A>	supplier();	//StringBuilder::new		누적할 곳
+	BiConsumer<A, T>	accumlator();	// (sb, s) -> ab.sppend(s)		누적방법
+	BinaryOperator<A>combiner();	// (sb1, sb2) -> sb1.append(sb2)	결합방법 (병렬)
+	Function<A, R>	finisher()		// sb -> sb.toString()		최종 변환
+	Set<Characterostocs> characteristics();	// 컬렉터의 특성이 담긴 Set을 반환
+	...
+}
+
+- Collectors클래스는 다양한 기능의 컬렉터(Collector를 구현한 클래스)ㄹ,ㄹ 제공
+변환 - mapping(), toList(), toSet(), toMap(), toCollection(),...
+통계 - counting(), summingInt(), averagingInt(), maxBy(), mixBy(), summarizingInt(), ...
+문자열 결합 - joining()
+리듀싱 - reducing()
+그룹화와 분할 - groupingBy(), partitionBy(), collectingAndThen()
+
+※ Collect() : 최종연산 / Collector : 인터페이스 / Collectors : 클래스
+-----------------------------------------------------------------------------
+ch14-46 스트림을 컬렉션, 배열로 변환
+- 스트림을 컬렉션으로 변환 - toList(), toSet(), toMap(), toCollection()
+List<String> names = stuSream.map(Student::getName)	// Stream<Student>→Stream<String>
+			.collect(Collectors.toList());	// Stream<String>→List<String>
+ArrayList<String> list = names.stream()
+	.collect(Collectors.toCollection(ArrayList::new));	// Stream<String>→ArrayList<String>
+
+Map<String,Person> map = personStream
+	.collect(Collectors.toMap(p->p.getRegId(), p->p)); // Stream<Person>→Map<String.Person>
+
+- 스트림을 배열로 변환 - toArray()
+Student[] stuNames = studentStream.toArray(Student[]::new);	//OK
+Student[] stuNames = sudentStream.toArray();	// 에러
+Object[]	stuNames = studentStream.toArray();	//OK
+-----------------------------------------------------------------------------
+ch14-47 스트림의 통계 - counting(), summingInt()
+- 스트림의 통계정보 제공 - counting(), summingInt(), maxBy(), minBy(), ...
+long count = stuStream.count();
+long count = stuStream.collect(counting());	//Collectors.counting()
+
+long totalScore = stuStream.mapToInt(Student::getTotalScore).sum();	// IntSream의 sum()
+long totalScore = stuStream.collect(summingInt(Student::getTotalScore));
+
+OptionalInt topscore = studentStream.ampToInt(Student::getTotalScore).max();
+Optional<Student> topStudent = stuStream
+			.max(Comparator.comparingInt(Student::getTotalScore));
+Optional<Student> topStudent = stuStream
+			.collect(maxBy(Comparator.comparingInt(Student::getTotalScroe));
+-----------------------------------------------------------------------------
+ch14-48 스트림을 리듀싱 - reducing()
+- 스트림을 리듀싱 - reducing() // 리듀싱이란? 그룹별 sum 그룹별 count 이런것들이 가능해진다!
+Collector reducing(BinaryOperator<T> op)
+Collector reducing(T identity, BinaryOperator<T> op)
+Collector reducing(U identity, Function<T,U> mapper, BinaryOperator<U> op)	//map+reduce
+
+IntStream intStream = new Random().ints(1,46).distinct().limit(6);
+OptionalInt	max = intStream.reduce(Integer::max);	//전체 리듀싱
+Optional<Integer>	max = intStream.boxed().collect(reducing(integer::max)); // 그룹별 리듀싱 가능
+
+long sum = intStream.reduce(0, (a,b) -> a + b);
+long sum = intStream.boxed().collect(reducing(0, (a,b)-> a + b));
+
+int grandTotal = stuStream.map(Student::getTotalScore).reduce(0, Integer::sum);
+int grandTotal = stuStream.collect(reducing(0, Student::getTotalScore, Integer::sum));
+
+- 문자열 스트림의 요소를 모두 연결 - joining()
+String studentNames = stuStream.map(student::getName).collect(joining());
+String studentNames = stuStream.map(student::getName).collect(joining(",")); //구분자
+String studentNames = stuStream.map(student::getName).collect(joining("," , "[" , "]"));
+String studentInfo = stuStream.collect(joining(","));	//Student의 toString()으로 결합
+-----------------------------------------------------------------------------
+ch14-49 없음...
+-----------------------------------------------------------------------------
+ch14-50 스트림의 그룹화와 분할
+- partitioningBy()는 스트림을 2분할 한다.
+Collector paritioningBy(Predicate predicate)
+Collector paritioningBy(Predicate predicate, Collector downstream)
+
+- groupingBy()는 스티름을 n분할 한다.
+Collector groupingBy(Function classifier)
+Collector groupingBy(Function classifier, Collector downStream)
+Collector groupingBy(Function classifier, Supplier mapFactory, Collector downstream)
+-----------------------------------------------------------------------------
+ch14-51 스트림의 분할 - paritioningBy()
+- 스트림의 요소를 2분할
+Collector partitioningBy(Predicate predicate)
+Collector partitioningBy(Predicate predicate, Collector downstream)
+
+Map<Boolean, List<Student>> stuBySex = stuStream
+		.collect(partitioningBy(Student::isMale)); // 학생들을 성별로 분할
+List<Student> maleStudent = stuBySex.get(true);	//Map에서 남학생 목록을 얻는다.
+List<Student> femaleStudent = stuBySex.get(false);	//Map에서 여학생 목록을 얻는다.
+
+Map<Boolean, Long> stuNumBySex = stuStream
+		.collect(partitioningBy(Student::isMale), counting()); // 분할 + 통계
+System.out.println("남학생 수 : " + stuNumBySex.get(true));	//남학생 수 : 8
+System.out.println("여학생 수 : " + stuNumBySex.get(false));	//여학생 수 : 10
+
+Map<Boolean, Optional<Student>> topScoreBySex = stuStream
+	.collect(partitioningBy(Student::isMale, maxBy(comparingInt(Student::getScore))));
+System.out.println("남학생 1등 : " + topScoreBySex.get(true));	//남학생 1등 : Optional[[나자바, 남, 1, 1, 300]]
+System.out.println("여학생 1등 : " + topScoreBySex.get(false));	//여학생 1등 : Optional[[김지미, 여, 1, 1, 250]]
+
+Map<Boolean, Map<Boolean, List<Student>>> failedStuBySex = stuStream	//다중 분할
+.collect(partitioningBy(Student::isMale,			// 1. 성별로 분할 (남/녀)
+	partitioningBy(s -> s.getScore() < 150)));	// 2. 성적으로 분할(불합격/합격)
+List<Student> fileMaleStu	= failledStuBySex.get(true).get(true);
+List<Student> filefemaleStu	= failledStuBySex.get(flase).get(true);
+-----------------------------------------------------------------------------
+ch14-52 스트림의 분할 - paritioningBy() (예제)
+-----------------------------------------------------------------------------
+ch14-53 스트림의 분할 - groupingBy()
+- 스트림의 요소를 그룹화
+Collector groupingBy(Function classfier)
+Collector groupingBy(Function classfier, Collector downstream)
+Collector groupingBy(Function classfier, Supplier mapFactory, Collector downstream)
+
+Map<Integer, List<Student>>stuByBan = stuStream	//학생을 반별로 그룹화
+		.collect(groupingBy(Student::getBan, toList()));	//toList() 생략가능
+
+Map<Integer, Map<Integer, List<Student>>> stuByHakAndBan = stuStrem	//다중 그룹화
+		.collect(groupingBy(Student::getHak,			// 1. 학년별 그룹화
+			groupingBy(Student::getBan)			// 2. 반별 그룹화
+		));
+
+Map<Integer, Map<Integer, SEt<Student.Level>>> stuByHakAndBan = stuStream
+ .collect{
+	groupingBy(Student::getHak, groupingBy(Student::getBan,	// 다중 그룹화(학년별, 반별)
+		mapping(s-> {	//성적 등급(Level)으로 변환. List<Student>	set<Student.Level>
+			if	(s.getScore() >= 200) return Student.Level.HIGH;
+			else if	(s.getScore() >= 100) return Student.Level.MID;
+			else 			   return Student.Level.LOPW;
+		}, toSet())	//mapping()			//enum Level { HIGH, MID, LOW }
+	))	//groupingBy()
+};	// collect()
+-----------------------------------------------------------------------------
+ch14-54 스트림의 분할 - groupingBy() (예제)
+-----------------------------------------------------------------------------
+ch14-55 스트림의 변환(1/2)
+<그림 14-55-1 참고>
+-----------------------------------------------------------------------------
+ch14-55 스트림의 변환(2/2)
+<그림 14-55-2 참고>

@@ -1,0 +1,15 @@
+import java.util.Optional;
+
+class Ex14_0 {
+	public static void main(String[] args) {
+//		int[] arr = null;
+		int[] arr = new int[0];
+		System.out.println("arr.length="+arr.length);
+		
+//		Optional<String> opt = null;	//OK. 하지만 바람직하진 않다...
+		Optional<String> opt = Optional.empty();
+		System.out.println("opt="+opt);
+		System.out.println("opt="+opt.get());
+		
+	}
+}

@@ -1,0 +1,16 @@
+class Ex13_12 {
+	public static void main(String args[]) {
+		Runnable r = new RunnableEx22();
+		new Thread(r).start();
+		new Thread(r).start();
+	}
+}
+
+public class Ex13_12 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,31 @@
+enum Direction2 {
+	EAST(1, ">"), SOUTH(2, "V"), WEST(3, "<"), NORTH(4, "^");
+	
+	private static final Direction2[] DIR_ARR = Direction2.values();
+	privae final int value;
+	private final String symbol;
+	
+	Direction2(int value, String symbol) { // 접근 제어자 private이 생략됨
+		this.value = value;
+		this.symbol = symbol;
+	}
+}
+public class Ex12_6 {
+
+	public static void main(String[] args) {
+		for(Direction2 d : Direction2.values())
+			System.out.printf("%s=%d\n", d.name(), d.ordinal());
+		
+		Direction2 d1 = Direction2.EAST;
+		Direction2 d2 = Direction2.of(1);
+		
+		System.out.println("d1=%s, %d\n", d1.name(), d1.getValue());
+		System.out.println("d1=%s, %d\n", d2.name(), d2.getValue());
+		System.out.println(Direction2.EAST.rotate(1));
+		System.out.println(Direction2.EAST.rotate(2));
+		System.out.println(Direction2.EAST.rotate(-1));
+		System.out.println(Direction2.EAST.rotate(-2));
+
+	}
+
+}

@@ -1,0 +1,6 @@
+class Ex14_0 {
+	public static void main(String[] args) {
+		IntStream new Random().ints();
+		intStream.limit(5).forEach(System.out::println);
+	}
+}

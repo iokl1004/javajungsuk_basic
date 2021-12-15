@@ -1,0 +1,11 @@
+class Student2 {
+	String anme;
+	
+}
+public class Ex14_10 {
+
+	public static void main(String[] args) {
+		Student2[]
+	}
+
+}

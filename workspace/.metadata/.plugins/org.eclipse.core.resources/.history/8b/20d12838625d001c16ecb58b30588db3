@@ -1,0 +1,7 @@
+class Ex14_0 {
+	public static void main(String[] args) {
+//		int[] arr = null;
+		int[] arr = new int[0];
+		System.out.println("arr.length="+arr.length);
+	}
+}

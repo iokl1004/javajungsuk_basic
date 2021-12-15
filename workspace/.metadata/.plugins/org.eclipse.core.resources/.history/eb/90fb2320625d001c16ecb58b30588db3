@@ -1,0 +1,6 @@
+class Ex14_0 {
+	public static void main(String[] args) {
+		int[] arr = {};
+		System.out.println("arr.length="+arr.length);
+	}
+}

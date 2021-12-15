@@ -8,8 +8,9 @@ public class Ex13_11 {
 		ThreadEx11_2 th2 = new ThreadEx11_2();
 		th1.start();
 		th2.start();
-		startTime = System.currentTimeMillis();
+		startTime = System.currentTimeMillis(); // 시작시간
 		
+		//join이 없으면 
 		try {
 			th1.join();	//main 쓰레드가 th1의 작업이 끝날때 까지 기다린다.
 			th2.join();	//main 쓰레드가 th2의 작업이 끝날때 까지 기다린다.

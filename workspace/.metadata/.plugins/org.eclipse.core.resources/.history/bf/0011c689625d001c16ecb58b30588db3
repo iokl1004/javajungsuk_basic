@@ -1,0 +1,24 @@
+import java.util.Optional;
+
+class Ex14_0 {
+	public static void main(String[] args) {
+//		int[] arr = null;
+		int[] arr = new int[0];
+		System.out.println("arr.length="+arr.length);
+		
+//		Optional<String> opt = null;	//OK. 하지만 바람직하진 않다...
+		Optional<String> opt = Optional.empty();
+		System.out.println("opt="+opt);
+//		System.out.println("opt="+opt.get());
+		
+		String str = "";
+		
+		try {
+			str = opt.get(); //예외 발생
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}
