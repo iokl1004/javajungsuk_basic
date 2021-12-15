@@ -46,3 +46,8 @@
 2021-12-14 (화) ch14-34 완료 ( https://www.youtube.com/watch?v=sEa4RQGG0HU&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=167 )
 
 2021-12-15 (수) ch14-50 완료 ( https://www.youtube.com/watch?v=VUh_t_j9qjE&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=171 )
+
+영상 강의를 다 본후...
+퇴사 후, 무작정 Java공부를 하고싶어 유튜브에 자바의 정석을 검색하니, 자바의 정석 이라는 책의 저자 남궁성 선생님께서 강의를 하신 영상이 있었다.
+강의 내용은 매우 훌륭하였으며, 확실히 기초가 탄탄해지는 느낌이다. 솔직히 전부 다는 이해는 하지 못하고, 어디가서 자바 좀 한다는 소리는 당연히 못하지만, 어느정도 익숙해져서 기분이 좋다.
+
